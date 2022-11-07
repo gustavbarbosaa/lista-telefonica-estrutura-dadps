@@ -6,6 +6,7 @@ struct Contato
 {
     string nome, telefone;
     Contato *prox;
+    Contato *ant;
 };
 
 void addInicio(Contato *&lista, string nomeFunc, string telefoneFunc)
@@ -98,13 +99,13 @@ bool removeInicio(Contato *&lista)
     Contato *aux = lista;
     lista = lista->prox;
     delete aux;
+    cout << "Contato apagado" << endl;
     return true;
 }
 
 bool removeFim(Contato *&lista)
 {
-
-    if(lista == NULL)
+    if (lista == NULL)
     {
         return false;
     }
@@ -115,18 +116,68 @@ bool removeFim(Contato *&lista)
         {
             perc = perc->prox;
         }
-        perc->prox = lista;
-
-        if (perc->prox == NULL)
-        {
-            Contato *aux = lista;
-            lista = lista->prox;
-            delete aux;
-            return true;
-        }
+        lista->prox = NULL;
+        delete perc;
+        cout << "Contato apagado" << endl;
+        return true;
     }
 }
 
+/*bool removeUsuario(Contato *&lista, string nome, string telefone)
+{
+    if (lista == NULL)
+    {
+        return false;
+    }
+    else
+    {
+        Contato *aux, *perc = lista;
+        while (perc->nome != nome && perc->telefone != telefone && perc->prox)
+        {
+            perc = perc->prox;
+        }
+        delete perc;
+        return true;
+    }
+}
+
+bool removeRepetidos(Contato *&lista)
+{
+    if (lista == NULL)
+    {
+        return false;
+    }
+    else
+    {
+        Contato *aux, *perc = lista;
+        while (perc->prox != NULL)
+        {
+            perc = perc->prox;
+            if(perc->nome == lista->nome && perc->telefone == lista->telefone)
+            {
+                delete perc;
+            }
+        }
+        return true;
+    }
+}*/
+
+void buscar(Contato *lista, string nome)
+{
+    if (lista == NULL)
+    {
+        cout << "Lista vazia" << endl;
+    }
+    else
+    {
+        while (lista->nome != nome && lista->telefone != telefone)
+        {
+            lista = lista->prox;
+        }
+        cout << "Nome: " << lista->nome << endl;
+        cout << "Telefone: " << lista->telefone << endl;
+    }
+}
 
 void imprimir(Contato *lista)
 {
@@ -151,13 +202,17 @@ int main()
 
     do
     {
+        cout << "Digite um numero correspondente a funcao abaixo" << endl;
         cout << "1 - Inserir no inicio" << endl;
         cout << "2 - Inserir no fim" << endl;
         cout << "3 - Inserir no meio" << endl;
         cout << "4 - Imprimir" << endl;
         cout << "5 - Deletar inicio" << endl;
         cout << "6 - Deletar fim" << endl;
-        cout << "7 - Encerrar programa" << endl;
+        cout << "7 - Deletar contato especifico" << endl;
+        cout << "8 - Deletar repetidos" << endl;
+        cout << "9 - Buscar contato" << endl;
+        cout << "10 - Encerrar programa" << endl;
         cout << "Quantidade de contatos: " << tamanho(lista) << endl;
         cin >> opcao;
         cout << "----------------------------------" << endl;
@@ -208,26 +263,48 @@ int main()
         case 5:
         {
             cout << "Removendo primeiro elemento" << endl;
-            bool remove = removeInicio(lista);
-            if (remove)
-            {
-                removeInicio(lista);
-            }
+            removeInicio(lista);
             cout << "----------------------------------" << endl;
             break;
         }
         case 6:
         {
             cout << "Removendo ultimo elemento" << endl;
-            bool remove = removeFim(lista);
-            if (remove)
-            {
-                removeFim(lista);
-            }
+            removeFim(lista);
             cout << "----------------------------------" << endl;
             break;
         }
         case 7:
+        {
+            cout << "FUNCAO NAO FUNCIONAL" << endl;
+            /*string nomeCtt, telefoneCtt;
+            cout << "Digite o nome do contato que voce quer remover: ";
+            cin >> nome;
+            cout << "Agora digite o numero do contato: ";
+            cin >> telefone;
+            removeUsuario(lista, nomeCtt, telefoneCtt);
+            cout << "Removendo contato" << endl;*/
+            cout << "----------------------------------" << endl;
+            break;
+        }
+        case 8:
+        {
+            cout << "FUNCAO NAO FUNCIONAL" << endl;
+            /*cout << "Removendo contatos repetidos" << endl;
+            removeRepetidos(lista);*/
+            cout << "----------------------------------" << endl;
+            break;
+        }
+        case 9:
+        {
+            string nomeCtt, telefoneCtt;
+            cout << "Insira o nome do contato que voce quer: ";
+            cin >> nomeCtt;
+            buscar(lista, nomeCtt);
+            cout << "----------------------------------" << endl;
+            break;
+        }
+        case 10:
         {
             cout << "Encerrando..." << endl;
             cout << "----------------------------------" << endl;
@@ -240,7 +317,7 @@ int main()
         }
         }
     }
-    while (opcao != 7);
+    while (opcao != 9);
 
 
     return 0;
