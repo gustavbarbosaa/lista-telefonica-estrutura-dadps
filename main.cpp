@@ -132,11 +132,19 @@ bool removeFim(Contato *&lista)
     else
     {
         Contato *aux, *perc = lista;
-        while (perc->nome != nome && perc->telefone != telefone && perc->prox)
+
+        while (lista != NULL)
         {
             perc = perc->prox;
+            if (perc->nome == nome && perc->telefone == telefone && perc->prox)
+            {
+                aux->prox = perc;
+                aux = aux->prox;
+                delete perc;
+            }
+            lista->prox = aux;
         }
-        delete perc;
+
         return true;
     }
 }
@@ -155,6 +163,8 @@ bool removeRepetidos(Contato *&lista)
             perc = perc->prox;
             if(perc->nome == lista->nome && perc->telefone == lista->telefone)
             {
+                aux->prox = perc;
+                aux = aux->prox;
                 delete perc;
             }
         }
@@ -170,12 +180,14 @@ void buscar(Contato *lista, string nome)
     }
     else
     {
-        while (lista->nome != nome && lista->telefone != telefone)
-        {
+        while (lista != NULL) {
             lista = lista->prox;
+
+            if (lista->nome == nome){
+                cout << "Nome: " << lista->nome << endl;
+                cout << "Telefone: " << lista->telefone << endl;
+            }
         }
-        cout << "Nome: " << lista->nome << endl;
-        cout << "Telefone: " << lista->telefone << endl;
     }
 }
 
@@ -276,7 +288,7 @@ int main()
         }
         case 7:
         {
-            cout << "FUNCAO NAO FUNCIONAL" << endl;
+            cout << "NÃO FUNCIONAL" << endl;
             /*string nomeCtt, telefoneCtt;
             cout << "Digite o nome do contato que voce quer remover: ";
             cin >> nome;
@@ -289,7 +301,7 @@ int main()
         }
         case 8:
         {
-            cout << "FUNCAO NAO FUNCIONAL" << endl;
+            cout << "NÃO FUNCIONAL" << endl;
             /*cout << "Removendo contatos repetidos" << endl;
             removeRepetidos(lista);*/
             cout << "----------------------------------" << endl;
